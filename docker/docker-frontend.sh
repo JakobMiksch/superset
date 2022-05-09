@@ -18,9 +18,12 @@
 set -e
 
 cd /app/superset-frontend
+rm -rf package-lock.json node_modules && npm cache clean -f
 npm install -g npm@7
 npm install -f --no-optional --global webpack webpack-cli
 npm install -f --no-optional
 
 echo "Running frontend"
-npm run dev
+# npm run dev
+
+node --max-old-space-size=8000 node_modules/webpack/bin/webpack.js  --mode=development --color --watch
